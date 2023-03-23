@@ -28,3 +28,8 @@ dev = [
 [project.urls]
 "Homepage" = "https://github.com/OpenPecha/openpecha-project-template"
 "Bug Tracker" = "https://github.com/OpenPecha/openpecha-project-template/issues"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]

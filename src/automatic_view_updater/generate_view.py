@@ -45,8 +45,8 @@ def generate_view(item_id,output_dir):
     pecha_attr = get_pecha_attr(meta,item_path)
     pecha = PechaMeta(**pecha_attr)
     serializer = PlainBaseViewSerializer()
-    serializer.serialize(pecha=pecha,output_dir=output_dir)
-
+    views_path = serializer.serialize(pecha=pecha,output_dir=output_dir)
+    return views_path
 
 if __name__ == "__main__":
     generate_view("I3D4F1804","./data")
