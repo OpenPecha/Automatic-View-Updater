@@ -27,6 +27,7 @@ jobs:
         pip install -U pip
         pip install .
         pip install .[dev]
+        pip install git
         pip install git+https://github.com/OpenPecha/Collection
   
         
