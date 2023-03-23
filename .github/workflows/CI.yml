@@ -24,6 +24,7 @@ jobs:
         
     - name: Install dependencies
       run: |
+        pip install pip==21.3.1
         pip install .
         sudo apt install git
         
