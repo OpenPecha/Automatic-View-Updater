@@ -24,6 +24,7 @@ jobs:
         
     - name: Install dependencies
       run: |
+        apt-get update
         pip install -U pip
         pip install .
         pip install .[dev]
