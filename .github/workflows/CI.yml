@@ -28,8 +28,6 @@ jobs:
         pip install -U pip
         pip install .
         pip install .[dev]
-        pip install GitPython
-        pip install git+https://github.com/OpenPecha/Collection
   
         
     - name: Test with pytest
