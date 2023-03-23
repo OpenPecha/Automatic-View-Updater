@@ -26,7 +26,7 @@ jobs:
       run: |
         pip install pip==21.3.1
 
-     - name: install 2 
+    - name: install 2 
       run: |
         pip install .
 
