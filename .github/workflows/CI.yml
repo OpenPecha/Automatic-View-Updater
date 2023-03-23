@@ -33,8 +33,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-    - name: Delete junks
-      run: 
     - name: Test Coverage
       run: |
         coverage run -m pytest
