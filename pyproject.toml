@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "project_name"
+name = "Automatic_view_updater"
 version = "0.0.1"
 authors = [
   { name="OpenPecha", email="dev@openpecha.org" },
@@ -17,14 +17,23 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+dependencies = [
+    "GitPython",
+    "openpecha"
+]
+
 [project.optional-dependencies]
 dev = [
     "pytest",
     "pytest-cov",
-    "pre-commit",
-]
-
+    "pre-commit"
+]   
 
 [project.urls]
 "Homepage" = "https://github.com/OpenPecha/openpecha-project-template"
 "Bug Tracker" = "https://github.com/OpenPecha/openpecha-project-template/issues"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "./src"
+]
