@@ -27,7 +27,7 @@ jobs:
         pip install pip==21.3.1
         pip install .
         pip install .[dev]
-        pip install git+https://github.com/OpenPecha/Collection
+        pip install git+https://github.com/OpenPecha/Collection.git
         
     - name: Test with pytest
       run: |
