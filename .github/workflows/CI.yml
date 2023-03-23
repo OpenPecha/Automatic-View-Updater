@@ -24,11 +24,10 @@ jobs:
         
     - name: Install dependencies
       run: |
-        sudo apt install git
         pip install -U pip
         pip install .
         pip install .[dev]
-  
+        sudo apt install git
         
     - name: Test with pytest
       run: |
