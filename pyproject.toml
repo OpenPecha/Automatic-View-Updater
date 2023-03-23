@@ -23,8 +23,7 @@ dev = [
     "pytest-cov",
     "pre-commit",
     "GitPython",
-    "openpecha",
-    "git+https://github.com/OpenPecha/Collection"
+    "openpecha"
 ]   
 
 
