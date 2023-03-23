@@ -17,17 +17,17 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+dependencies = [
+    "GitPython",
+    "openpecha"
+]
+
 [project.optional-dependencies]
 dev = [
     "pytest",
     "pytest-cov",
-    "pre-commit",
-    "GitPython",
-    "openpecha"
-    
+    "pre-commit"
 ]   
-
-
 
 [project.urls]
 "Homepage" = "https://github.com/OpenPecha/openpecha-project-template"
