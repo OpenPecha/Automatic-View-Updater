@@ -22,8 +22,9 @@ dev = [
     "pytest",
     "pytest-cov",
     "pre-commit",
-    "GitPython"
-]
+    "GitPython",
+    "openpecha"
+]   
 
 
 [project.urls]
