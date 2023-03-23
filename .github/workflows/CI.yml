@@ -22,22 +22,12 @@ jobs:
       with:
         python-version: "3.8"
 
-    - name: install 1  
+    - name: install dependencies
       run: |
         pip install pip==21.3.1
-
-    - name: install 2 
-      run: |
         pip install .
-
-    - name: Install 3
-      run: |
         pip install .[dev]
-
-    - name: Install 4
-      run: |
         pip install git+https://github.com/OpenPecha/Collection.git
-
     - name: Test with pytest
       run: |
         pytest
