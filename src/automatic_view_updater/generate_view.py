@@ -6,7 +6,6 @@ from openpecha.core.pecha import OpenPechaFS
 from openpecha.utils import load_yaml
 import re
 
-
 OPENPECHA_DATA_PREFIX_URL = "https://github.com/OpenPecha-Data"
 OUTPUT_ROOT_PATH = "data"
 
