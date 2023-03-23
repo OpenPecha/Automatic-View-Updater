@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -33,7 +33,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-    
+    - name: Delete junks
+      run: 
     - name: Test Coverage
       run: |
         coverage run -m pytest
