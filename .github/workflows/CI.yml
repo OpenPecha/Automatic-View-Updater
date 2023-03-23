@@ -24,7 +24,6 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install -U pip
         pip install .
         sudo apt install git
         
