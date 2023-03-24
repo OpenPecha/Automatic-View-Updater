@@ -1,17 +1,21 @@
-from collection.views.plain_base import PlainBaseViewSerializer
+
 from collection.items.pecha import Pecha,PechaMeta
+from collection.views.plain_base import PlainBaseView
+from collection.views.view_types import ViewTypes
+from collection.views.view import View
 from pathlib import Path
 from git import Repo
-from openpecha.core.pecha import OpenPechaFS
 from openpecha.utils import load_yaml
+from openpecha.config import BASE_PATH
 import re
 
 OPENPECHA_DATA_PREFIX_URL = "https://github.com/OpenPecha-Data"
-OUTPUT_ROOT_PATH = "data"
+DEFAULT_OUTPUT_DIR = BASE_PATH
+
 
 
 def download_repo(item_id):
-    item_path = OUTPUT_ROOT_PATH+"/"+item_id
+    item_path = DEFAULT_OUTPUT_DIR.as_posix()+"/"+item_id
     item_github_url = f"{OPENPECHA_DATA_PREFIX_URL}/{item_id}"
     Repo.clone_from(item_github_url,item_path)
     return item_path
@@ -38,14 +42,22 @@ def get_pecha_attr(dic,item_path):
     pecha["pecha_path"] = item_path
     return pecha
 
-def generate_view(item_id,output_dir):
+
+def generate_view(item_id:str,view:View,output_dir:str=None):
+    global DEFAULT_OUTPUT_DIR
+    if output_dir:
+        DEFAULT_OUTPUT_DIR = output_dir
+    
     item_path = get_item(item_id)
     meta = get_item_meta(item_id,item_path)
     pecha_attr = get_pecha_attr(meta,item_path)
     pecha = PechaMeta(**pecha_attr)
-    serializer = PlainBaseViewSerializer()
-    views_path = serializer.serialize(pecha=pecha,output_dir=output_dir)
+    views_path = view.serializer_class.serialize(pecha=pecha,output_dir=DEFAULT_OUTPUT_DIR)
     return views_path
 
+
 if __name__ == "__main__":
-    generate_view("I3D4F1804","./data")
+    view_class = ViewTypes.plainbase
+    view_obj = view_class()
+    generate_view("I3D4F1804",view_obj)
+    
