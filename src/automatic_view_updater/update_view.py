@@ -1,4 +1,4 @@
-from generate_view import generate_view
+from automatic_view_updater.generate_view import generate_view
 from openpecha.utils import load_yaml
 from pathlib import Path
 from github import Github
