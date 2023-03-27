@@ -48,7 +48,7 @@ def push_view(pecha_id,view_path,view_type,token)-> None:
     view_name = f"{pecha_id}_{base_id}.txt"
     file_path = f"{collection_id}.opc/views/{view_type}/{view_name}"
     commit_msg = f"Updated {view_name}"
-    update_repo(g, pecha_id, file_path, commit_msg, view)
+    update_repo(g, collection_id, file_path, commit_msg, view)
 
 
 def push_views(pecha_id,views_path,view_type,token):
