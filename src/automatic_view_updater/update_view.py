@@ -19,8 +19,8 @@ logging.basicConfig(
 )
 
 class ViewEnum(Enum):
-    plaintext: PlainBaseView
-    hfml: HFMLView
+    plaintext =  PlainBaseView
+    hfml = HFMLView
 
 
 def notifier(msg):
@@ -79,7 +79,7 @@ def update_view(issue_message,token)->None:
         view_types = get_view_types(pecha_id)
         for view_type in view_types:
             view = get_view_class(view_type)
-            views_path = generate_view(pecha_id,view,view_type)
+            views_path = generate_view(pecha_id,view())
             print("Views Created")
             if views_path:
                 push_views(pecha_id,views_path,view_type,token)
@@ -88,7 +88,9 @@ def update_view(issue_message,token)->None:
 
 def get_view_class(view_name:str):
     try:
-        return ViewEnum[view_name.lower()].value
+        for e in ViewEnum:
+            if e.name == view_name:
+                return e.value
     except ValueError as e:
         print(f"Unknown View Class {view_name}")
         return []
