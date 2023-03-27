@@ -20,8 +20,8 @@ jobs:
         python-version: "3.10"
     - name : Install Dependencies
       run : |
-        pip install git+https://github.com/OpenPecha/Automatic-View-Updater.git
-        
+        pip install git+https://github.com/OpenPecha/Automatic-View-Updater.git@push-views
+
     - name: Test 
       run: |
         echo "Its Working"

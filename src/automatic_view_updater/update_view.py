@@ -8,7 +8,6 @@ import logging
 
 
 
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 OWNER="jungtop"
 
 logging.basicConfig(
@@ -35,8 +34,8 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         notifier( f'{repo_name} not updated with error {e}')
 
     
-def push_view(pecha_id,view_path,view_type)-> None:
-    g = Github(GITHUB_TOKEN)
+def push_view(pecha_id,view_path,view_type,token)-> None:
+    g = Github(token)
     view = view_path.read_text(encoding="utf-8")
     base_id = view_path.stem
     view_name = f"{pecha_id}_{base_id}.txt"
@@ -45,9 +44,9 @@ def push_view(pecha_id,view_path,view_type)-> None:
     update_repo(g, pecha_id, file_path, commit_msg, view)
 
 
-def push_views(pecha_id,views_path,view_type):
+def push_views(pecha_id,views_path,view_type,token):
     for view_path in views_path:
-        push_view(pecha_id,view_path,view_type)
+        push_view(pecha_id,view_path,view_type,token)
 
 
 def get_view_types(pecha_id):
@@ -64,7 +63,7 @@ def get_collection_id():
             return collection_id
 
 
-def update_view(issue_message):
+def update_view(issue_message,token)->None:
     global collection_id
     pecha_ids = extract_pecha_ids(issue_message)
     collection_id = get_collection_id()
@@ -76,7 +75,7 @@ def update_view(issue_message):
             views_path = generate_view(pecha_id,view,view_type)
             print("Views Created")
             if views_path:
-                push_views(pecha_id,views_path,view_type)
+                push_views(pecha_id,views_path,view_type,token)
 
 
 if __name__ == "__main__":
