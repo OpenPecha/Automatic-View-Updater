@@ -1,8 +1,10 @@
 from automatic_view_updater.generate_view import generate_view
+from collection.views.hfml import HFMLView
+from collection.views.plain_base import PlainBaseView
+from enum import Enum
 from openpecha.utils import load_yaml
 from pathlib import Path
 from github import Github
-from automatic_view_updater.view_types import get_view_class
 import os
 import logging
 
@@ -15,6 +17,11 @@ logging.basicConfig(
     format="%(levelname)s: %(message)s",
     level=logging.INFO,
 )
+
+class ViewEnum(Enum):
+    plaintext: PlainBaseView
+    hfml: HFMLView
+
 
 def notifier(msg):
     logging.info(msg)
@@ -78,5 +85,10 @@ def update_view(issue_message,token)->None:
                 push_views(pecha_id,views_path,view_type,token)
 
 
-if __name__ == "__main__":
-    update_view("C1234567")
+
+def get_view_class(view_name:str):
+    try:
+        return ViewEnum[view_name.lower()].value
+    except ValueError as e:
+        print(f"Unknown View Class {view_name}")
+        return []

@@ -29,7 +29,7 @@ def get_item_meta(item_id,item_path):
         meta = load_yaml(meta_path)
     return meta
 
-def get_pecha_attr(dic,item_path):
+def get_pecha_attr(dic,item_path)->None:
     pecha = {}
     pecha_attrs = Pecha.__annotations__.keys()
     for pecha_attr in pecha_attrs:
