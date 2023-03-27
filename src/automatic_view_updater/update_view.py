@@ -32,13 +32,17 @@ def extract_pecha_ids(msg):
 
 
 def update_repo(g, repo_name, file_path, commit_msg, new_content):
-    try:
+    repo = g.get_repo(f"{OWNER}/{repo_name}")
+    contents = repo.get_contents(f"{file_path}",ref="main")
+    repo.update_file(path = contents.path, message = commit_msg, content =new_content, sha=contents.sha,branch="main")
+    notifier( f'{repo_name} updated ')
+    """ try:
         repo = g.get_repo(f"{OWNER}/{repo_name}")
         contents = repo.get_contents(f"{file_path}", ref="master")
         repo.update_file(contents.path, commit_msg, new_content, sha=contents.sha, branch="master")
         notifier( f'{repo_name} updated ')
     except Exception as e:
-        notifier( f'{repo_name} not updated with error {e}')
+        notifier( f'{repo_name} not updated with error {e}') """
 
     
 def push_view(pecha_id,view_path,view_type,token)-> None:
