@@ -1,7 +1,5 @@
 
-from collection.items.pecha import Pecha,PechaMeta
-from collection.views.plain_base import PlainBaseView
-from collection.views.view_types import ViewTypes
+from collection.items.pecha import Pecha
 from collection.views.view import View
 from pathlib import Path
 from git import Repo
@@ -33,7 +31,7 @@ def get_item_meta(item_id,item_path):
 
 def get_pecha_attr(dic,item_path):
     pecha = {}
-    pecha_attrs = PechaMeta.__annotations__.keys()
+    pecha_attrs = Pecha.__annotations__.keys()
     for pecha_attr in pecha_attrs:
         if pecha_attr in dic.keys():
             pecha[pecha_attr] = dic[pecha_attr]
@@ -43,21 +41,18 @@ def get_pecha_attr(dic,item_path):
     return pecha
 
 
-def generate_view(item_id:str,view:View,output_dir:str=None):
+def generate_view(item_id:str,view:View,output_dir:Path=None):
     global DEFAULT_OUTPUT_DIR
     if output_dir:
         DEFAULT_OUTPUT_DIR = output_dir
-    
     item_path = get_item(item_id)
     meta = get_item_meta(item_id,item_path)
     pecha_attr = get_pecha_attr(meta,item_path)
-    pecha = PechaMeta(**pecha_attr)
-    views_path = view.serializer_class.serialize(pecha=pecha,output_dir=DEFAULT_OUTPUT_DIR)
+    pecha = Pecha(**pecha_attr)
+    views_path = view.serialize(pecha=pecha,output_dir=DEFAULT_OUTPUT_DIR)
     return views_path
 
 
 if __name__ == "__main__":
-    view_class = ViewTypes.plainbase
-    view_obj = view_class()
-    generate_view("I3D4F1804",view_obj)
+    generate_view("I3D4F1804",Path("./data"))
     

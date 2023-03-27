@@ -2,13 +2,14 @@ from generate_view import generate_view
 from openpecha.utils import load_yaml
 from pathlib import Path
 from github import Github
+from view_types import get_view_class
 import os
 import logging
 
 
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-OWNER="Openpecha-Data"
+OWNER="jungtop"
 
 logging.basicConfig(
     filename="basefile_metadata.log",
@@ -34,7 +35,7 @@ def update_repo(g, repo_name, file_path, commit_msg, new_content):
         notifier( f'{repo_name} not updated with error {e}')
 
     
-def push_view(pecha_id,view_path,view_type):
+def push_view(pecha_id,view_path,view_type)-> None:
     g = Github(GITHUB_TOKEN)
     view = view_path.read_text(encoding="utf-8")
     base_id = view_path.stem
@@ -51,7 +52,8 @@ def push_views(pecha_id,views_path,view_type):
 
 def get_view_types(pecha_id):
     meta_path = Path(f"./{collection_id}.opc/meta.yml")
-    view_types = meta_path["item_views_map"]
+    meta = load_yaml(meta_path)
+    view_types = meta["item_views_map"]
     return view_types[pecha_id]
 
 def get_collection_id():
@@ -62,7 +64,7 @@ def get_collection_id():
             return collection_id
 
 
-def main(issue_message):
+def update_view(issue_message):
     global collection_id
     pecha_ids = extract_pecha_ids(issue_message)
     collection_id = get_collection_id()
@@ -70,5 +72,12 @@ def main(issue_message):
     for pecha_id in pecha_ids:
         view_types = get_view_types(pecha_id)
         for view_type in view_types:
-            views_path = generate_view(pecha_id,view_type)
-            push_views(pecha_id,views_path,view_type)
+            view = get_view_class(view_type)
+            views_path = generate_view(pecha_id,view,view_type)
+            print("Views Created")
+            if views_path:
+                push_views(pecha_id,views_path,view_type)
+
+
+if __name__ == "__main__":
+    update_view("C1234567")
