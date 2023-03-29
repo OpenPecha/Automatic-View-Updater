@@ -44,7 +44,7 @@ def get_pecha_attr(dic, item_path):
 
 
 def generate_view(item_id: str, view: View, output_dir: Path = None):
-    if output_dir:
+    if not output_dir:
         output_dir = BASE_PATH
     item_path = get_item(item_id, output_dir)
     meta = get_item_meta(item_id, item_path)
