@@ -18,10 +18,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
-    
+    - name : Install Dependencies
+      run : |
+        pip install git+https://github.com/OpenPecha/Automatic-View-Updater.git@push-views
+
     - name: Test 
       run: |
         echo "Its Working"
-    - name: Extracting issue comment
+    - name: Extracting issue commentd 
       run: |
         echo "${{ github.event.issue.body }}"
