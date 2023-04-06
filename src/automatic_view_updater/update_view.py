@@ -1,6 +1,6 @@
 from automatic_view_updater.generate_view import generate_view
 from collection.views.hfml import HFMLView
-from collection.views.plain_base import PlainBaseView
+from collection.views.plain_text import PlainTextView
 from enum import Enum
 from openpecha.utils import load_yaml
 from pathlib import Path
@@ -19,7 +19,7 @@ logging.basicConfig(
 )
 
 class ViewEnum(Enum):
-    plaintext =  PlainBaseView
+    plaintext =  PlainTextView
     hfml = HFMLView
 
 
@@ -79,11 +79,10 @@ def update_view(issue_message,token)->None:
         view_types = get_view_types(pecha_id)
         for view_type in view_types:
             view = get_view_class(view_type)
-            views_path = generate_view(pecha_id,view())
+            col_path = generate_view(pecha_id,Path("./data"))
             print("Views Created")
             if views_path:
                 push_views(pecha_id,views_path,view_type,token)
-
 
 
 def get_view_class(view_name:str):
