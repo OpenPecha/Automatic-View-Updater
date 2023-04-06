@@ -1,15 +1,14 @@
 import shutil
 from pathlib import Path
-
+from collection.views.plain_text import PlainTextView
 from automatic_view_updater.generate_view import BASE_PATH, generate_view
-from automatic_view_updater.update_view import get_view_class
 
 
 def test_view():
 
     expected_view = Path("./tests/data/expected_result.txt").read_text(encoding="utf-8")
-    view = get_view_class("plaintext")
-    result_views_path = generate_view("I3D4F1804", view())
-    result_view = result_views_path[0].read_text(encoding="utf-8")
+    result_views_path = generate_view("IF7F1A77F",PlainTextView(),Path("./data"))
+    first_view = result_views_path[0]
+    result_view = first_view.read_text(encoding="utf-8")
     assert expected_view == result_view
     shutil.rmtree(BASE_PATH.as_posix())

@@ -20,7 +20,7 @@ classifiers = [
 dependencies = [
     "GitPython",
     "openpecha",
-    "collection@git+https://github.com/OpenPecha/Collection.git"
+    "collection@git+https://github.com/OpenPecha/Collection.git@create-meta"
 
 ]
 
@@ -29,7 +29,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "pre-commit"
-]   
+]
 
 [project.urls]
 "Homepage" = "https://github.com/OpenPecha/openpecha-project-template"
