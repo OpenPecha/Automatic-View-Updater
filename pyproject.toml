@@ -29,7 +29,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "pre-commit"
-]   
+]
 
 [project.urls]
 "Homepage" = "https://github.com/OpenPecha/openpecha-project-template"
