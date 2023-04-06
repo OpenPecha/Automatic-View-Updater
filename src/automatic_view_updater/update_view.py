@@ -1,4 +1,4 @@
-from automatic_view_updater.generate_view import generate_view
+from generate_view import generate_view
 from collection.views.hfml import HFMLView
 from collection.views.plain_text import PlainTextView
 from enum import Enum
@@ -7,7 +7,7 @@ from pathlib import Path
 from github import Github
 import os
 import logging
-
+import sys
 
 
 OWNER="jungtop"
@@ -57,33 +57,16 @@ def push_views(pecha_id,views_path,view_type,token):
 
 
 def get_view_types(pecha_id):
+    views = []
+    collection_id = os.getenv("REPO_NAME")
     meta_path = Path(f"./{collection_id}.opc/meta.yml")
     meta = load_yaml(meta_path)
     view_types = meta["item_views_map"]
-    return view_types[pecha_id]
-
-def get_collection_id():
-    dirs = os.listdir(os.getcwd())
-    for dir in dirs:
-        if dir.endswith(".opc"):
-            collection_id = Path(dir).stem
-            return collection_id
-
-
-def update_view(issue_message,token)->None:
-    global collection_id
-    pecha_ids = extract_pecha_ids(issue_message)
-    collection_id = get_collection_id()
-    
-    for pecha_id in pecha_ids:
-        view_types = get_view_types(pecha_id)
-        for view_type in view_types:
-            view = get_view_class(view_type)
-            col_path = generate_view(pecha_id,Path("./data"))
-            print("Views Created")
-            if views_path:
-                push_views(pecha_id,views_path,view_type,token)
-
+    for view_type,body in view_types.items():
+        if pecha_id in body.keys():
+            views.append(view_type)
+        
+    return views
 
 def get_view_class(view_name:str):
     try:
@@ -93,3 +76,25 @@ def get_view_class(view_name:str):
     except ValueError as e:
         print(f"Unknown View Class {view_name}")
         return []
+
+def update_view(issue_message,token)->None:
+    global collection_id
+    pecha_ids = extract_pecha_ids(issue_message)
+    collection_id = os.getenv("REPO_NAME")
+    
+    for pecha_id in pecha_ids:
+        view_types = get_view_types(pecha_id)
+        for view_type in view_types:
+            view = get_view_class(view_type)
+            views_path = generate_view(pecha_id,view())
+            print("Views Created")
+            print(views_path)
+            print(type(views_path))
+            if views_path:
+                push_views(pecha_id,views_path,view_type,token)
+
+
+if __name__ == "__main__":
+    issue_message = sys.argv[1]
+    token = sys.argv[2]
+    update_view(issue_message,token)
