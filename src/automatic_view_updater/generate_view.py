@@ -4,11 +4,11 @@ from typing import Dict
 
 from collection.items.alignment import Alignment
 from collection.items.collection_meta import CollectionMeta
+from collection.items.item import Item
 from collection.items.pecha import Pecha, PechaFragment
 from collection.items.work import Work
 from collection.utils import get_item
 from collection.views.plain_text import PlainTextView
-from collection.items.item import Item
 from collection.views.view import View
 from openpecha.config import BASE_PATH
 from openpecha.utils import load_yaml
@@ -23,7 +23,7 @@ class ItemEnum:
     pecha_fragment = PechaFragment
 
 
-def get_op_item_meta(item_id:str, item_path:str):
+def get_op_item_meta(item_id: str, item_path: str):
     """
     This function gives the meta of a item
     :param item_id:id of item
@@ -37,13 +37,13 @@ def get_op_item_meta(item_id:str, item_path:str):
     return meta
 
 
-def get_item_attr(dic:Dict, item_path:str,item_cls:Item):
+def get_item_attr(dic: Dict, item_path: str, item_cls: Item):
     """
     This function gives the attributes of the item_cls
     :param dic: The raw dic containg meta of the item
     :param item_path: Path of the item in str
     :pararm item_cls: Type of Item class
-    :return:A dic contating all the attributes of the item_cls 
+    :return:A dic contating all the attributes of the item_cls
     """
     pecha = {}
     pecha_attrs = item_cls.__annotations__.keys()
@@ -56,7 +56,7 @@ def get_item_attr(dic:Dict, item_path:str,item_cls:Item):
     return pecha
 
 
-def get_item_cls(item_id:str):
+def get_item_cls(item_id: str):
     """
     This function return item class base on the ID
     :param item_id: id of the item
@@ -72,9 +72,9 @@ def get_item_cls(item_id:str):
     return item_class
 
 
-def get_collection_meta(collection_id:str):
+def get_collection_meta(collection_id: str):
     """
-    This function return the meta of the collection considering 
+    This function return the meta of the collection considering
     it's in action pwd.
     :param collection_id:Collection id
     :return: meta in str
@@ -98,7 +98,7 @@ def generate_view(op_item_id: str, view: View, output_dir: Path = None):
     op_item_path = get_item(op_item_id)
     meta = get_op_item_meta(op_item_id, op_item_path)
     item_cls = get_item_cls(op_item_id)
-    item_attr = get_item_attr(meta, op_item_path,item_cls)
+    item_attr = get_item_attr(meta, op_item_path, item_cls)
     item_obj = item_cls(**item_attr)
     serializer = view.serializer
     views_path = serializer().serialize(item=item_obj, output_dir=Path("./data"))
